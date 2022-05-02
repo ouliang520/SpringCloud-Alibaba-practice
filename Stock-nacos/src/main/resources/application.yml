@@ -1,0 +1,13 @@
+server:
+  port: 8021
+spring:
+  application:
+    name: stock-service
+  cloud:
+    nacos:
+      server-addr: 192.168.149.128:8847
+      discovery:
+        username: nacos
+        password: nacos
+        namespace: public
+

@@ -1,0 +1,44 @@
+第一步:添加feign依赖
+第二步:添加feign接口和方法(抽象方法名与调用服务的方法名相同)
+第三步:controller注入feign接口,以及调用
+第四步:启动类添加注解@EnableFeignClients
+
+feign配置类:
+加注解@Configuration 为全局配置
+局部配置不需要加该注解
+
+在yml配置输出日志信息
+feign:
+  client:
+    config:
+      stock-service:  //这是对应的微服务名
+        loggerLevel: BASIC
+
+契约配置(支持feign原生注解)
+ feign:
+  client:
+  config:
+   stock-service: #对应微服务
+    loggerLevel: FULL
+     contract: feign.Contract.Default #指定Feign原生注解契约配置
+
+
+超时时间配置
+ feign:
+  client:
+  config:
+  stock-service: #对应微服务
+  # 连接超时时间，默认2s
+  connectTimeout: 5000
+  # 请求处理超时时间，默认5s
+  readTimeout: 10000
+
+
+配置拦截器
+feign:
+  client:
+    config:
+      stock-service:
+        loggerLevel: BASIC
+        requestInterceptors[0]: #配置拦截器
+          com.ouliang.order.intercptor.feign.CustomFeignInterceptor //拦截器类 拦截器需要实现RequestInterceptor接口

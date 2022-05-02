@@ -1,0 +1,24 @@
+spring:
+  application:
+    #除了默认的配置文件,其他配置文件都必须写上后缀 跟服务名相同的dateId的配置文件称为默认的配置文件
+    name: com.ouliang.order.redis  #会自动根据服务名来自动拉去对应的配置文件,如果dateId跟服务名不一致,就需要手动指定
+
+  cloud:
+    nacos:
+      server-addr: 192.168.149.128:8847
+      #nacos客户端默认是properties的文件扩展名
+      config:
+        file-extension: yaml
+        #配置文件优先级((优先级大的会覆盖优先级小的,并且会形成互补)
+        namespace: 856bcd42-f5ba-4418-bc23-07502a656325 #命名空间的id
+        #多个自定义配置文件配置(多个配置文件时候,如果存在重复属性,后读取到的覆盖,即配置文件的下标越大优先级越高)
+        shared-configs:
+          - data-id: com.ouliang.common.properties
+            refresh: true
+        #group 默认是DEFAULT_GROUP
+        #第二种配置方式
+        extension-configs[0]:
+          data-id: com.ouliang.common01.properties
+          refresh: true
+
+      #extension优先级大于shared

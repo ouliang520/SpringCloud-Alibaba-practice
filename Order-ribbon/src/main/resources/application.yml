@@ -1,0 +1,14 @@
+server:
+  port: 8030
+spring:
+  application:
+    name: order-service
+  cloud:
+    nacos:
+      server-addr: 192.168.149.128:8847
+      discovery:
+        username: nacos
+        password: nacos
+        namespace: public
+        #ephemeral: true #设置永久实例(当前实例挂了,也不会删除实例)(false为永久实例)
+

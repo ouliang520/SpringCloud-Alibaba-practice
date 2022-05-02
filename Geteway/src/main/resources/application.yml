@@ -1,0 +1,39 @@
+server:
+  port: 8088
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    #gateway配置
+    #路由规则
+    gateway:
+      routes:
+        - id: order_route #路由的唯一标识,路由到订单
+          uri: lb://order-service #需要转发的地址  lb:使用nacos中本地负载均衡策略 order-service服务名
+          #断言规则 用于路由规则的匹配
+          predicates:
+            - Path=/order-serv/**
+          filters:
+#            - PrefixPath=/mall‐order # 添加前缀 对应微服务需要配置context‐path
+            - AddRequestHeader=name, ouliang
+            - StripPrefix=1
+#            - RedirectTo=302, https://www.baidu.com/ #重定向到百度
+            - CheckAuth=ou  #自定义过滤器
+        #- id: stock_route
+      globalcors:
+        cors-configurations:
+          '[/**]':                     #允许跨域访问的资源
+            allowedOrigins: "*"         #跨域允许来源
+            allowedMethods:
+              - GET
+              - POST
+
+
+
+
+    #配置nacos
+    nacos:
+      discovery:
+        server-addr: 192.168.149.128:8847
+        username: nacos
+        password: nacos
